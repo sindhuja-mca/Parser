@@ -197,19 +197,5 @@ public class FileServiceImpl implements IFileService {
 		return null;
 	}
 
-	public static void main(String[] args) {
-
-		List<String> phoneList = new ArrayList<>();
-		Pattern pattern = Pattern.compile(
-				("(?:\\s+|)((0|(?:(\\+|)91))(?:\\s|-)*(?:(?:\\d(?:\\s|-)*\\d{9})|(?:\\d{2}(?:\\s|-)*\\d{8})|(?:\\d{3}(?:\\s|-)*\\d{7}))|\\d{10})(?:\\s+|)")
-						.toString(),
-				Pattern.MULTILINE | Pattern.DOTALL);
-		Matcher matcher = pattern.matcher(" I arun +918904559459 sdd.");
-		System.out.println(matcher);
-		while (matcher.find()) {
-			phoneList.add(matcher.group());
-		}
-		System.out.println(phoneList);
-	}
-
+	
 }
