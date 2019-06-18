@@ -1,5 +1,8 @@
 package com.hsi.parsing.controller;
 
+import java.io.IOException;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -8,47 +11,29 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.hsi.parsing.model.UploadDetails;
+import com.hsi.parsing.service.CSVReader;
 import com.hsi.parsing.service.IFileService;
-//import com.hsi.parsing.service.IUserService;
+import com.hsi.parsing.service.ParserForDoc;
 
 @RestController
 
 public class UserController {
 
-	//
-	// @Autowired
-	// IUserService userService;
-
-	@Autowired
+@Autowired
 	IFileService fileService;
+@Autowired
+	CSVReader read;
+	
+	@RequestMapping(value = ("/processFiles"), method = RequestMethod.POST)
+	public UploadDetails fileUpload(@RequestParam(name = "File") MultipartFile[] files) {
 
-	// @RequestMapping(value=("/registration"),method = RequestMethod.POST)
-
-	// public UserDetails registration(@RequestBody UserDetails sd) {
-	// return userService.create(sd);
-	// }
-	// @RequestMapping(value = ("/login"), method = RequestMethod.POST)
-	// public Token login(@RequestHeader("user") String username,
-	// @RequestHeader("password") String password) {
-	// return userService.login(username, password);
-	// }
-	//
-	// @RequestMapping(value = ("/getMyDetails"), method = RequestMethod.GET)
-	// public UserDetails getMyDetails(@RequestHeader("accessToken") String token) {
-	// return userService.getMyDetails(token);
-	// }
-	@RequestMapping(value = ("/FileUpload"), method = RequestMethod.POST)
-	public UploadDetails fileUpload(@RequestParam("File") MultipartFile file) {
-		// validate(token);
-		return fileService.fileUpload(file);
+		new ParserForDoc().processFiles(files);
+		return null;
 	}
-	// private UserDetails validate(String token) {
-	// return getMyDetails(token);
-	//
-	// }
-	// @RequestMapping(value=("/logout"),method=RequestMethod.POST)
-	// public void logOut(@RequestHeader("accessToken") String token) {
-	// userService.logout(token);
-	// }
-	// }
+	@RequestMapping(value = ("/getCandidateDetails"), method = RequestMethod.GET)
+	public List<UploadDetails> getCandidateDetails() throws IOException{
+		return read.startProcessing();
+	}
+	
+	
 }
