@@ -1,9 +1,10 @@
+
+
 package com.hsi.parsing.model;
 
 import java.util.Date;
 
 public class UploadDetails {
-
 	private String candidateName;
 	private String candidateEmail;
 	private String candidatePhone;
@@ -12,6 +13,28 @@ public class UploadDetails {
 	private String experience;
 	private String primarySkill;
 	private String secondarySkill;
+
+	
+	public UploadDetails() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	public UploadDetails(String candidateName, String candidateEmail, String candidatePhone, String uploadedFileName,
+			String qualification, String experience, String primarySkill, String secondarySkill, Date uploadedDate) {
+		super();
+		this.candidateName = candidateName;
+		this.candidateEmail = candidateEmail;
+		this.candidatePhone = candidatePhone;
+		this.uploadedFileName = uploadedFileName;
+		this.qualification = qualification;
+		this.experience = experience;
+		this.primarySkill = primarySkill;
+		this.secondarySkill = secondarySkill;
+		this.uploadedDate = uploadedDate;
+	}
+
+	
 
 	public String getUploadedFileName() {
 		return uploadedFileName;
@@ -105,3 +128,4 @@ public class UploadDetails {
 	}
 
 }
+
