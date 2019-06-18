@@ -47,6 +47,7 @@ public class CSVReader{
 			String email = "";
 
 			String phone = "";
+			String skills = "";
 
 			if (csvRecord.size() > 0)
 				name = csvRecord.get(0);
@@ -54,15 +55,18 @@ public class CSVReader{
 				phone = csvRecord.get(1);
 			if (csvRecord.size() > 2)
 				email = csvRecord.get(2);
+			if(csvRecord.size()>3)
+				skills = csvRecord.get(3);				
 			
 
 			System.out.println("---------------");
 			System.out.println("Name : " + name);
 			System.out.println("Email : " + email);
 			System.out.println("Phone : " + phone);
+			System.out.println("skills : " + skills);
 			System.out.println("---------------\n\n");
 
-			return new UploadDetails(name, email, phone, null, null, null, null, null, null);
+			return new UploadDetails(name, email, phone, skills, null, null, null, null, null);
 
 		}
 	}

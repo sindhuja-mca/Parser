@@ -6,7 +6,7 @@ import org.springframework.web.multipart.MultipartFile;
 public interface IFileService{
 	
 	
-	void processFiles(MultipartFile[] files );
+	public String processFiles(MultipartFile[] files );
 	
 		
 }

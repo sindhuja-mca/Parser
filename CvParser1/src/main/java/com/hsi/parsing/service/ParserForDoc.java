@@ -25,7 +25,7 @@ public class ParserForDoc implements IFileService {
 
 
 
-	public void processFiles(MultipartFile[] files ) {
+	public String processFiles(MultipartFile[] files ) {
 
 		try {
 
@@ -107,7 +107,7 @@ public class ParserForDoc implements IFileService {
 
 				}
 
-				System.out.println("Writing successful");
+				//System.out.println("Writing successful");
 				// close the file
 				fw.close();
 			}
@@ -115,6 +115,7 @@ public class ParserForDoc implements IFileService {
 } catch (Exception exep) {
 		exep.printStackTrace();
 }
+		return "Writing successfull";
 	}
 
 	private static void handleEducation(String[] fileData, FileWriter fw, int i) throws IOException {
