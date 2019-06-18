@@ -1,3 +1,5 @@
+
+
 package com.hsi.parsing.model;
 
 import java.util.Date;
@@ -126,3 +128,4 @@ public class UploadDetails {
 	}
 
 }
+
