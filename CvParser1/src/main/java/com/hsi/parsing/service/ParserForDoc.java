@@ -1,5 +1,7 @@
 package com.hsi.parsing.service;
 
+import com.hsi.parsing.exception.CVParsingException;
+
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -21,7 +23,7 @@ import org.springframework.web.multipart.MultipartFile;
 @Service
 public class ParserForDoc implements IFileService {
 	
-	public static String dirPath = "E://personel//resume//old";
+	private static String dirPath = "E://personel//resume//old";
 
 
 
@@ -44,7 +46,7 @@ public class ParserForDoc implements IFileService {
 				String fileName = files[cnt].getOriginalFilename();
 				System.out.println(fileName);
 				if (!fileName.endsWith(".doc")) {
-					throw new RuntimeException( "This file extension is not supported yet!");
+					throw new CVParsingException( "This file extension is not supported yet!");
 				}
 
 				WordExtractor extractor = null;
@@ -118,7 +120,7 @@ public class ParserForDoc implements IFileService {
 		return "Writing successfull";
 	}
 
-	private static void handleEducation(String[] fileData, FileWriter fw, int i) throws IOException {
+	private void handleEducation(String[] fileData, FileWriter fw, int i) throws IOException {
 		String education;
 		education = findEducation(fileData[i]);
 		if (education != "[]") {
@@ -130,7 +132,7 @@ public class ParserForDoc implements IFileService {
 		}
 	}
 
-	private static void handleExp(String[] fileData, FileWriter fw, int i) throws IOException {
+	private void handleExp(String[] fileData, FileWriter fw, int i) throws IOException {
 		String yearExp;
 		yearExp = findYearsOfxperience(fileData[i]);
 		if (yearExp != "[]") {
@@ -142,7 +144,7 @@ public class ParserForDoc implements IFileService {
 		}
 	}
 
-	private static void handlePrimarySkills(String[] primeSkills, String[] fileData, FileWriter fw, int i)
+	private void handlePrimarySkills(String[] primeSkills, String[] fileData, FileWriter fw, int i)
 			throws IOException {
 		primeSkills[i] = findPrimarySkills(fileData[i]);
 		
@@ -158,7 +160,7 @@ public class ParserForDoc implements IFileService {
 		}
 	}
 
-	private static void handleMail(boolean emailFlag, String[] fileData, FileWriter fw, int i) throws IOException {
+	private void handleMail(boolean emailFlag, String[] fileData, FileWriter fw, int i) throws IOException {
 		String email;
 		email = findEmail(fileData[i]);
 		if (email != "[]" && emailFlag != true) {
@@ -170,7 +172,7 @@ public class ParserForDoc implements IFileService {
 		}
 	}
 
-	private static void handlePhone(boolean phoneFlag, String[] fileData, FileWriter fw, int i) throws IOException {
+	private void handlePhone(boolean phoneFlag, String[] fileData, FileWriter fw, int i) throws IOException {
 		String phoneNumbers;
 		phoneNumbers = findPhoneNumber(fileData[i]);
 		if (phoneNumbers != "[]" && phoneFlag != true) {
@@ -182,7 +184,7 @@ public class ParserForDoc implements IFileService {
 		}
 	}
 
-	private static void handleName(boolean nameFlag, String[] fileData, FileWriter fw, int i) throws IOException {
+	private void handleName(boolean nameFlag, String[] fileData, FileWriter fw, int i) throws IOException {
 		String name;
 		name = findName(fileData[i]);
 		if (name != "[]" && nameFlag != true) {
@@ -195,7 +197,7 @@ public class ParserForDoc implements IFileService {
 		}
 	}
 
-	public static String findName(String line) {
+	private String findName(String line) {
 		List<String> name = new ArrayList<>();
 		Pattern pattern = Pattern.compile(("^[\\p{L} .'-]+$").toString(), Pattern.CASE_INSENSITIVE);
 		Matcher matcher = pattern.matcher(line);
@@ -205,7 +207,7 @@ public class ParserForDoc implements IFileService {
 		return name.toString();
 	}
 
-	public static String findPrimarySkills(String line) {
+	private String findPrimarySkills(String line) {
 		List<String> primeSkills = new ArrayList<>();
 	
 		Pattern pattern = Pattern.compile(
@@ -222,7 +224,7 @@ public class ParserForDoc implements IFileService {
 		
 	}
 
-		public static String findYearsOfxperience(String line) {
+		private String findYearsOfxperience(String line) {
 		List<String> yearExp = new ArrayList<>();
 	
 		Pattern pattern = Pattern.compile(("\\b(Experience|EXPERIENCE)\\b\\s(d{2})[\\t]\\b(years|Yrs)\\b").toString(),
@@ -236,7 +238,7 @@ public class ParserForDoc implements IFileService {
 
 
 
-	public static String findPhoneNumber(String line) {
+	private String findPhoneNumber(String line) {
 		List<String> phoneNumbers = new ArrayList<>();
 		Pattern pattern = Pattern.compile(("([+]([0-9]{2}))[-]?[\\s]?([0-9]{9})").toString(),
 				Pattern.MULTILINE | Pattern.DOTALL);
@@ -247,7 +249,7 @@ public class ParserForDoc implements IFileService {
 		return phoneNumbers.toString();
 	}
 
-	public static String findEducation(String details) {
+	private String findEducation(String details) {
 		List<String> education = new ArrayList<>();
 		
 		Pattern pattern = Pattern
@@ -260,7 +262,7 @@ public class ParserForDoc implements IFileService {
 		return education.toString();
 	}
 
-	public static String findEmail(String details) {
+	private String findEmail(String details) {
 		List<String> emailList = new ArrayList<>();
 		Pattern pattern = Pattern.compile(("[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\\.[a-zA-Z0-9-.]+").toString(),
 				Pattern.MULTILINE);
