@@ -39,5 +39,4 @@ public class ResumeParsingException extends RuntimeException {
     super(cause);
 
   }
-
 }

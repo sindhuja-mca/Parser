@@ -9,22 +9,27 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.hsi.parsing.exception.ResumeParsingException;
-import com.hsi.parsing.model.CandidateDetails;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
 import org.springframework.stereotype.Service;
-import org.springframework.core.io.Resource;
-import org.springframework.beans.factory.annotation.Value;
+
+import com.hsi.parsing.exception.ResumeParsingException;
+import com.hsi.parsing.model.CandidateDetails;
 
 @Service
-public class CSVReaderServiceImpl implements CSVReaderService{
+public class CSVReaderServiceImpl implements CSVReaderService {
 
-@Override
-	public List<CandidateDetails> getCandidateDetailsFromCSVFile(String dirPath) throws ResumeParsingException,IOException{
-	File dir = new File(dirPath);
+	@Override
+	public List<CandidateDetails> getCandidateDetailsFromCSVFile(String dirPath)
+			throws ResumeParsingException, IOException {
+		File dir = new File(dirPath);
 		File[] listFiles = dir.listFiles();
+
+		if (listFiles == null) {
+			throw new ResumeParsingException("No files in this path!");
+		}
+
 		List<CandidateDetails> candidateDetailsList = new ArrayList<CandidateDetails>();
 		for (File f : listFiles) {
 			if (f.isDirectory()) {
@@ -56,8 +61,8 @@ public class CSVReaderServiceImpl implements CSVReaderService{
 				phone = csvRecord.get(1);
 			if (csvRecord.size() > 2)
 				email = csvRecord.get(2);
-			if(csvRecord.size()>3)
-				skills = csvRecord.get(3);				
+			if (csvRecord.size() > 3)
+				skills = csvRecord.get(3);
 
 			System.out.println("---------------");
 			System.out.println("Name : " + name);
