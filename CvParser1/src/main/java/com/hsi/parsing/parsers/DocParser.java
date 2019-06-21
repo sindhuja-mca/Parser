@@ -144,5 +144,11 @@ public class DocParser extends AbstractParser {
 
     mainB.append(",");
   }
+  
+  
+  public static void main(String[] args) throws IOException {
+    AbstractParser parser = new DocParser();
+    parser.convert("C:\\Users\\vkuma09\\Downloads\\resampleresumes (1)");
+  }
 
 }
