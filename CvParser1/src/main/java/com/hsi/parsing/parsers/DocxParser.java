@@ -1,7 +1,6 @@
 package com.hsi.parsing.parsers;
 
 import java.io.IOException;
-
 public class DocxParser extends AbstractParser {
 
 	@Override
