@@ -18,7 +18,8 @@ public class DocParser extends AbstractParser {
   @Override
   public String convert(String dirPath) throws IOException {
     System.out.println("dirPath *****"+dirPath);
-    try { // Please propertise files for the constants (we can use spring to read values
+    try { 
+      // Please propertise files for the constants (we can use spring to read values
       // from
       // properties file)
       // Make this class as @Service or @Component class(Spring annotated class)

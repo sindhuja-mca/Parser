@@ -36,6 +36,7 @@ public class ResumeParserController {
 
 	static Logger logger = Logger.getLogger(ResumeParserController.class.getName());
 
+
 	/**
 	 * This method will call from UI to convert multiple files to .CSV .doc to .CSV
 	 * & .docx to .CSV & .pdf to CSV and all the converted files will store in /temp
