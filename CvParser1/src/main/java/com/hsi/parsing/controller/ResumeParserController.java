@@ -8,10 +8,12 @@ import com.hsi.parsing.service.ConvertToMultipleCSVService;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Logger;
 
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.collections.map.SingletonMap;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -43,14 +45,14 @@ public class ResumeParserController {
 	 * @return ResponseEntity
 	 **/
 	@GetMapping(value = ("/convertToCSV"))
-	public ResponseEntity<String> convertToCSVFormat(@RequestParam("filePath") String filePath,
+	public ResponseEntity<Map> convertToCSVFormat(@RequestParam("filePath") String filePath,
 			HttpServletResponse response) throws IOException {
 		try {
 			logger.info(ResumeParserConstant.LOG_FOR_ENTRY_FOR_CONVERTCSVFORMAT_METHOD);
 			convertToMultipleCSV.convertToCSV(filePath);
-			return new ResponseEntity<>(ResumeParserConstant.SUCCESS_MSG_FOR_CSV_CREATE, HttpStatus.OK);
-		} catch (ResumeParsingException resumeParsingException) {
-			return new ResponseEntity<>(resumeParsingException.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+			return new ResponseEntity<>(new SingletonMap("successMessage",ResumeParserConstant.SUCCESS_MSG_FOR_CSV_CREATE), HttpStatus.OK);
+		} catch (ResumeParsingException e) {
+			return new ResponseEntity(new SingletonMap("errorMessage",e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 
@@ -69,8 +71,8 @@ public class ResumeParserController {
 			logger.info(ResumeParserConstant.LOG_FOR_ENTRY_FOR_GETCANDIDATEDETAILS_METHOD);
 			List<CandidateDetails> candidateDetailsFromCSVFile = csvReader.getCandidateDetailsFromCSVFile(filePath);
 			return new ResponseEntity<>(candidateDetailsFromCSVFile, HttpStatus.OK);
-		} catch (ResumeParsingException resumeParsingException) {
-			return new ResponseEntity(resumeParsingException.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+		} catch (ResumeParsingException e) {
+      return new ResponseEntity(new SingletonMap("errorMessage",e.getMessage()), HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 }

@@ -1,5 +1,7 @@
 package com.hsi.parsing.parsers;
 
+import com.hsi.parsing.exception.ResumeParsingException;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileWriter;
@@ -15,7 +17,7 @@ public class DocParser extends AbstractParser {
 
   @Override
   public String convert(String dirPath) throws IOException {
-    System.out.println("Auto *****");
+    System.out.println("dirPath *****"+dirPath);
     try { // Please propertise files for the constants (we can use spring to read values
       // from
       // properties file)
@@ -24,6 +26,11 @@ public class DocParser extends AbstractParser {
       // Write Junits for positve and negitive scenarios
       // String dirPath = "C://Users//Keerti.Hakki//Desktop//MultipleDocs";
       File dir = new File(dirPath);
+      
+      if(!dir.isDirectory()) {
+        throw new ResumeParsingException("Invalid Directory!");        
+      }
+      
       File[] files = dir.listFiles();
       long fileDate;
 
@@ -32,7 +39,7 @@ public class DocParser extends AbstractParser {
       FileWriter fw = null;
       if (files.length == 0) {
         System.out.println("The directory is empty");
-        // use loggers log.debug
+        throw new ResumeParsingException("Empty Directory!");
       } else {
 
         /*
@@ -122,6 +129,7 @@ public class DocParser extends AbstractParser {
       }
     } catch (Exception exep) {
       exep.printStackTrace();
+      throw new ResumeParsingException(exep.getMessage());
     }
     return "Writing successfull";
   }
